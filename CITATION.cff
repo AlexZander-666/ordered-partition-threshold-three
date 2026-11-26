@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "Please cite this work when using the formal proof or verification scripts."
+type: software
+title: "Four interlacing rows of ordered set partitions at threshold three"
+authors:
+  - family-names: Zuo
+    given-names: Bowen
+    affiliation: East China University of Science and Technology
+repository-code: "https://github.com/AlexZander-666/ordered-partition-threshold-three"
+license: Apache-2.0
+keywords:
+  - ordered set partitions
+  - interlacing polynomials
+  - three poles
+  - Lean 4

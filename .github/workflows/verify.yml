@@ -1,0 +1,105 @@
+name: Verify four-row interlacing at threshold three
+on:
+  push:
+    paths:
+      - 'formal/**'
+      - 'paper/**'
+      - 'verification/**'
+      - 'SHA256SUMS'
+      - '.github/workflows/verify.yml'
+  pull_request:
+    paths:
+      - 'formal/**'
+      - 'paper/**'
+      - 'verification/**'
+      - 'SHA256SUMS'
+      - '.github/workflows/verify.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: threshold-three-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify-threshold-three:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 245
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Check archived inputs and replay integer and rational certificates
+        run: |
+          receipts="$RUNNER_TEMP/threshold-three-receipts"
+          mkdir "$receipts"
+          sha256sum --check SHA256SUMS | tee "$receipts/artifact-hashes.log"
+          (cd formal && sha256sum --check SOURCE-SHA256SUMS) | tee "$receipts/source-hashes.log"
+          (
+            cd paper
+            python3 -B anc/fixed-three-astra/verify_disks.py
+            python3 -B anc/fixed-three-astra/verify_corner.py
+            python3 -B anc/fixed-three-finite/verify.py anc/fixed-three-finite/intervals-239.json --max-old 239 > "$receipts/finite.json"
+            cmp anc/fixed-three-finite/result-239.json "$receipts/finite.json"
+          ) 2>&1 | tee "$receipts/arithmetic.log"
+          deps="$(mktemp -d "$RUNNER_TEMP/threshold-three-deps.XXXXXXXX")"
+          cp formal/{lean-toolchain,lakefile.toml,lake-manifest.json} "$deps/"
+          printf 'THRESHOLD_THREE_DEPS=%s\n' "$deps" >> "$GITHUB_ENV"
+
+      - name: Install the pinned Lean toolchain
+        uses: leanprover/lean-action@fe408643ea7367d8c0404a8be3975bb145f5fb64
+        with:
+          lake-package-directory: ${{ env.THRESHOLD_THREE_DEPS }}
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-github-cache: 'false'
+          use-mathlib-cache: 'false'
+
+      - name: Retrieve the locked external dependency objects
+        run: |
+          receipts="$RUNNER_TEMP/threshold-three-receipts"
+          grep -rhE '^import Mathlib(\.[A-Za-z_][A-Za-z_0-9]*)*$' --include='*.lean' formal/OrderedPartitions |
+            cut -d' ' -f2 | sort -u > "$receipts/mathlib-cache-roots.txt"
+          mapfile -t imports < "$receipts/mathlib-cache-roots.txt"
+          test "${#imports[@]}" -gt 0
+          (
+            cd "$THRESHOLD_THREE_DEPS"
+            lake exe cache get "${imports[@]}"
+          ) 2>&1 | tee "$receipts/mathlib-cache.log"
+          cmp formal/lake-manifest.json "$THRESHOLD_THREE_DEPS/lake-manifest.json"
+
+      - name: Cold-build all 300 modules and independently replay them
+        run: |
+          if ! ulimit -Sn 65536 2>/dev/null; then
+            printf 'Keeping the current open-file limit of %s\n' "$(ulimit -Sn)"
+          fi
+          receipts="$RUNNER_TEMP/threshold-three-receipts"
+          test ! -e formal/.lake
+          python3 -Bu formal/verify.py "$THRESHOLD_THREE_DEPS/.lake/packages" 1 \
+            2>&1 | tee "$receipts/lean-cold.log"
+          grep -E '^PASS 300 cold project modules, 300 independent kernel replays, [0-9]+ source axiom reports and [0-9]+ targeted reports$' "$receipts/lean-cold.log"
+          {
+            printf 'module\tsource_sha256\tobject_sha256\n'
+            sed -nE 's/^kernel_replay_exit=0 ([^ ]+) source_sha256=([0-9a-f]+) object_sha256=([0-9a-f]+)$/\1\t\2\t\3/p' "$receipts/lean-cold.log"
+          } > "$receipts/module-receipts.tsv"
+          test "$(wc -l < "$receipts/module-receipts.tsv")" -eq 301
+          if [[ -f verification/module-receipts.tsv ]]; then
+            cmp verification/module-receipts.tsv "$receipts/module-receipts.tsv"
+          fi
+
+      - name: Save verification receipts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: threshold-three-verification
+          path: ${{ runner.temp }}/threshold-three-receipts/
+          if-no-files-found: warn
+          retention-days: 14

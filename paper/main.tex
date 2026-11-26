@@ -1,0 +1,495 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,lmodern}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Four interlacing rows of ordered set partitions at threshold three},
+  pdfauthor={Bowen Zuo}}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\Real}{\operatorname{Re}}
+\newcommand{\Imag}{\operatorname{Im}}
+
+\title{Four interlacing rows of ordered set partitions at threshold three}
+\author{Bowen Zuo\\[2pt]\small East China University of Science and Technology}
+\date{November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let \(P_n(t)\) enumerate ordered set partitions of an \(n\)-element
+labeled set by the number of blocks of size at least three. We prove
+that every nonconstant row has only simple negative zeros and that
+any four consecutive rows pairwise strictly interlace. This is the
+largest window that holds uniformly in the starting rank. For
+\(n\ge240\), a rectangular contour isolates one negative real pole
+and a conjugate pair of poles in the generating function. The real
+pole is eliminated exactly at each old root in the regime where all
+three poles merge. Rational enclosures control the remaining
+parameter range, and exact isolation certificates cover the 720
+comparisons with smaller starting rank.
+\end{abstract}
+
+\section{The ordered model and the result}
+
+An ordered set partition of \([n]\) is a sequence of nonempty,
+pairwise disjoint subsets whose union is \([n]\). Every block takes
+its place in that sequence, and the labels within a block are
+unordered. Each block of size at least three contributes a factor
+of \(t\). Write \(P_n(t)\) for the sum of these weights, including
+\(P_0=1\) for the empty sequence. This is the threshold-three case
+of Alexandersson's conjecture for the fully ordered model
+\cite{symcat,realrooted}.
+
+\begin{theorem}\label{thm:main}
+For every \(n\ge0\), the polynomial \(P_n\) has degree
+\(d=\lfloor n/3\rfloor\) and has \(d\) distinct negative roots. Write its
+roots as \(a_1<\cdots<a_d\). For every \(h\in\{1,2,3\}\), let
+\(b_1<\cdots<b_e\) be the roots of \(P_{n+h}\).
+If \(e=d\) and \(d>0\), then
+\[
+ a_1<b_1<a_2<b_2<\cdots<a_d<b_d<0.
+\]
+If \(e=d+1\), then
+\[
+ b_1<a_1<b_2<a_2<\cdots<a_d<b_{d+1}<0.
+\]
+A constant has the empty root list. The second order in the case
+\(d=0\) means \(b_1<0\), and two empty lists satisfy the first order
+vacuously. Consequently any four consecutive rows pairwise strictly
+interlace, and four is the largest such window valid for all starts.
+\end{theorem}
+
+To explain the relation to earlier models, set \(A(z)=z+z^2/2\) and
+\(B(z)=e^z-1-z-z^2/2\). The exponential generating function is
+\begin{equation}\label{eq:egf}
+  \sum_{n\ge0}P_n(t)\frac{z^n}{n!}
+  =\frac{1}{1-A(z)-tB(z)}.
+\end{equation}
+In the unordered model of the earlier question \cite{mo}, it is
+\(e^{A(z)+tB(z)}\). The singleton-or-large lift described in the
+catalog \cite{related} orders only the large blocks and excludes
+pairs, giving \(e^z/(1-tB(z))\). Already at \(n=6\) these two models
+give \(76+117t+10t^2\) and \(1+42t+20t^2\), respectively, whereas
+\(P_6=3690+973t+20t^2\). The broader interlacing window was proposed
+for the unordered problem in \cite{mo}. Fang \cite[Theorem~1]{fang}
+proves eventual interlacing for the unordered threshold-four
+polynomials and gaps one through four. Our conclusion concerns all
+ranks at the fully ordered threshold three.
+
+Selecting the label set of the last block gives the integer recurrence
+\begin{equation}\label{eq:last}
+ P_0=1,\qquad P_n(t)=\sum_{a=1}^{n}\binom na t^{[a\ge3]}P_{n-a}(t).
+\end{equation}
+In particular, \(P_1=1\), \(P_2=3\), and \(P_3=12+t\).
+There are at most \(\lfloor n/3\rfloor\) marked blocks. For every
+number of marked blocks within this bound, take that many triples and
+fill the remaining labels with singleton blocks. Thus every
+coefficient up to the degree is positive. A strictly alternating
+pair of root lists has lengths differing by at most one. The degrees
+of \(P_{3m+2}\) and \(P_{3m+6}\) differ by two, proving the asserted
+obstruction to a uniform five-row window.
+
+\section{The three poles}
+
+Put \(t=-q/(1-q)\), with \(0<q<1\). This is a strictly decreasing
+bijection onto the negative real axis. By \eqref{eq:egf},
+\begin{equation}\label{eq:G}
+ \frac{P_n(-q/(1-q))}{n!}=(1-q)[z^n]\frac{1}{G_q(z)},\qquad
+ G_q(z)=1-2q-z-\frac{z^2}{2}+qe^z .
+\end{equation}
+At any zero \(z\) of \(G_q\), direct substitution yields
+\begin{equation}\label{eq:deriv}
+ G_q'(z)=\frac{z^2}{2}-2(1-q).
+\end{equation}
+
+Let \(J(x)=(1+x)e^{-x}-1+x^2/4\). Since
+\(J'(x)=x(1/2-e^{-x})\), \(J\) has exactly one positive zero
+\(\alpha\). Taylor bounds give \(J(1)<0<J(11/10)\).
+Let \(q_c=1-\alpha^2/4=(1+\alpha)e^{-\alpha}\). Then
+\(q_c>279/400\). For \(q_c<q<1\), the stationary equation
+\(q=(1+x)e^{-x}\) has one solution in \((-1,0)\), a local maximum,
+and one in \((0,\alpha)\), a local minimum. The minimum value is
+\(-2J(x)>0\). Since \(G_q(0)>0\) and \(G_q(-2)<0\), there is exactly
+one real zero, denoted \(-v\), with \(0<v<2\) and \(G_q'(-v)>0\).
+On the negative axis to the left of the maximum \(G_q\) increases
+strictly and to its right remains positive up to zero. The positive
+minimum excludes all nonnegative real zeros.
+
+\begin{lemma}\label{lem:rectangle}
+Throughout \(q_c\le q\le1\), the boundary of
+\(\mathcal R=[-2,2]+\ii[-\pi,\pi]\) satisfies
+\(|G_q|\ge1/10\). There are precisely three zeros in its interior,
+counted with multiplicity. For \(q_c<q<1\) they are the simple
+real zero \(-v\) and a simple conjugate pair \(\zeta,\bar\zeta\)
+with \(\Imag\zeta>0\). As \(q\downarrow q_c\), \(\zeta\to\alpha\).
+\end{lemma}
+
+\begin{proof}
+Conjugation reduces the boundary checks to \(y=\Imag z\ge0\).
+On the top edge the imaginary part is \(-(1+x)\pi\), where
+\(x=\Real z\). When \(|x+1|<1/10\), the real part is at least
+\(3/2-2+\pi^2/2-1/200-e^{-0.9}>1\). On the left edge the
+imaginary part is at least \(y\), and for \(y<1/10\),
+the real part is at most \(1-1.38+0.005+e^{-2}<-1/10\).
+On the right edge the real and imaginary parts are
+\[
+  -3-2q+y^2/2+qe^2\cos y,\qquad qe^2\sin y-3y.
+\]
+For \(0\le y\le1/5\), use \(\cos y\ge0.98\) in the real part.
+For \(1/5\le y\le1\) and \(1\le y\le\pi/2\), use
+\(\sin y/y\ge5/6\) and \(\sin y/y\ge2/\pi\), respectively,
+in the imaginary part. For \(\pi/2\le y\le2.3\) use
+\(\cos y\le0\), and for \(2.3\le y\le\pi\) use
+\(\cos y\le-1/2\), in the real part. These bounds use only \(q>0.69\)
+and give \(|G_q|\ge1/10\).
+
+At \(q=1\), Taylor's integral formula gives
+\[
+ G_1(z)=\frac{z^3}{2}\int_0^1(1-s)^2e^{sz}\,\mathrm ds .
+\]
+Multiplication by \(e^{-\ii\,\Imag(z)/2}\) makes the integral have
+positive real part, since the rotated integrand has positive
+real part for \(0<s<1\) and \(|\Imag z|\le\pi\).
+The argument principle makes the count constant along \(q\).
+For \(q_c<q<1\) there is one simple real zero. The other two are
+nonreal conjugates and hence simple. The upper zero is continuous
+in \(q\) by local simplicity and uniqueness. At \(q_c\), \(\alpha\)
+is a double zero since \(G_{q_c}(\alpha)=G_{q_c}'(\alpha)=0\) and
+\(G_{q_c}''(\alpha)=\alpha>0\); the negative zero remains simple.
+A sufficiently small disk around \(\alpha\) retains two zeros by
+Rouch\'e's theorem, giving the limit.
+\end{proof}
+
+On the open interval \(q_c<q<1\), write \(r=|\zeta|\),
+\(\theta=\arg\zeta\), \(\beta=\arg G_q'(\zeta)\),
+\(\lambda=r/v\), \(b=|G_q'(\zeta)|/(2G_q'(-v))\) and
+\(\psi_n=(n+1)\theta+\beta\). The estimates below give
+\(r<\min(2,v)\), \(0<\theta<\pi/3\) and \(0<\beta<\pi\).
+Normalize with a positive factor and use the three residues:
+\begin{align}
+ S_n&=\tfrac12 |G_q'(\zeta)|r^{n+1}[z^n]G_q(z)^{-1}
+      =-\cos\psi_n-b(-\lambda)^{n+1}+e_n,\label{eq:res}\\
+ |e_n|&\le18|G_q'(\zeta)|(r/2)^{n+1}.\label{eq:error}
+\end{align}
+Indeed, the coefficient is the contour integral of
+\(1/(G_q(z)z^{n+1})\) minus the other residues,
+the integral being divided by \(2\pi\ii\). The boundary has length
+\(8+4\pi\), with \(|z|\ge2\) and the lower bound in
+Lemma~\ref{lem:rectangle}. The sign of \(S_n\) equals that of the
+original row in \eqref{eq:G}.
+
+\section{Rational bounds away from the merger}
+
+Put \(\epsilon=(6(1-q))^{1/3}\). For \(q_c<q<1\),
+\(0<\epsilon<61/50\). We first consider \(1/32\le\epsilon<61/50\).
+The accompanying rational certificate partitions \([1/32,61/50]\)
+into 851 closed intervals with shared endpoints. For each interval
+the corresponding parameter bounds are
+\(q_{\min}=1-\epsilon_{\max}^3/6\) and
+\(q_{\max}=1-\epsilon_{\min}^3/6\).
+Let \(q_0\) be their midpoint and \(\Delta q\) their half-width.
+Each record supplies a disk with rational center \(c\), radius \(d\),
+and two real rational numbers \(A_*>0,V_*>0\). The disk lies in
+\(\Real z>0\), \(|\arg z|<\pi/3\), and \(|z|<A_*<V_*<2\).
+The exact checks below are applied only to the oscillatory parameters
+\(q_c<q<1\).
+
+In 848 disks with \(\Imag c>d\), the comparison polynomial on
+\(|w|=d\) is \(G_{q_0}'(c)w\). The residual has bound
+\[
+ |G_{q_0}(c)|+
+ \tfrac12\bigl(|G_{q_0}''(c)|+q_0 e^{\Real c+d}d\bigr)d^2
+ +\Delta q(2+e^{\Real c+d}).
+\]
+In the other three disks the center is real. The comparison polynomial
+is \(G_{q_0}''(c)w^2/2\), and the residual has bound
+\[
+ |G_{q_0}(c)|+|G_{q_0}'(c)|d+
+ \tfrac16 q_0e^{\Real c+d}d^3
+ +\Delta q(2+e^{\Real c+d}).
+\]
+These follow from the Taylor formula on the complex line segment
+and from \(G_q(z)-G_{q_0}(z)=(q-q_0)(e^z-2)\).
+In each comparison the certificate strictly bounds the residual by
+the modulus of the comparison polynomial. By Rouch\'e's theorem
+the selected disk contains either the upper zero or the conjugate
+pair, by Lemma~\ref{lem:rectangle} and the geometry of the disk.
+The certificate checks \(G_q(-V_*)>0\) for both parameter endpoints,
+which suffices by the affine dependence on \(q\).
+The unique negative zero then gives \(V_*<v\). In particular
+\(r<A_*<V_*<v\), and \(\Imag G_q'(\zeta)=\Real\zeta\,\Imag\zeta>0\)
+by \eqref{eq:deriv}.
+
+To see the error bound used by the checker, let \(X=\Real\zeta\),
+\(Y=\Imag\zeta\). The imaginary equation at the root gives
+\(qe^X\sin Y=(1+X)Y\), hence
+\(\Real G_q'(\zeta)=(1+X)(Y\cot Y-1)\).
+Since \(Y<\sqrt3\) and \(\sin Y\ge Y/2\) on this range,
+\[
+ 1-Y\cot Y=\frac{\int_0^Y s\sin s\,\mathrm ds}{\sin Y}
+       \le 2Y^2/3 .
+\]
+Using \(X<2\), \(r<2\), and \(\sin\theta=Y/r\), we obtain
+\(|G_q'(\zeta)|/\sin\theta<12\). If \(\Imag c>d\), another
+bound follows directly from \eqref{eq:deriv}. In that case the
+certificate uses
+\[
+ g=\min\left(12,\frac{(A_*^2/2+2(1-q_{\min}))A_*}{\Imag c-d}\right);
+\]
+otherwise it takes \(g=12\).
+The minimum of \(\sin(h\theta)/\sin\theta\), \(1\le h\le3\), is
+\(\min(1,4\cos^2\theta-1)\). Since
+\(4\cos^2\theta-1=(\sqrt3 X-Y)(\sqrt3 X+Y)/r^2\),
+the certificate gives a positive lower bound \(H\) for that
+minimum, using the two linear forms' Euclidean norm \(2\)
+and the disk bounds on their values. Finally
+\(G_q'(-v)>V_*^2/2-2(1-q_{\min})>0\).
+Thus the checked inequality
+\begin{equation}\label{eq:middle-cert}
+ \frac{g}{H}\left(
+   \frac{(A_*/V_*)^{241}}{2(V_*^2/2-2(1-q_{\min}))}
+   +18(A_*/2)^{241}\right)<2/5
+\end{equation}
+gives, for \(m\ge240\) and \(h=1,2,3\),
+\begin{equation}\label{eq:middle}
+ b\lambda^{m+1}+|e_m|<(2/5)\sin(h\theta).
+\end{equation}
+Both bases in \eqref{eq:middle-cert} are below one, so
+the exponent \(241\) suffices for the whole tail.
+The largest upper bound rounded up to six decimals is \(0.385554\).
+The verifier computes norm intervals by integer square roots and
+uses the degree-36 Taylor polynomial with absolute remainder at most
+\(8\cdot2^{37}/37!\) for all exponential inputs of modulus at most two.
+In particular the intervals certify bounds throughout each cell in
+the parameter and along each relevant disk boundary.
+
+At an old root \(S_n=0\), \eqref{eq:middle} controls
+\(|\cos\psi_n|\) and also the error in \(S_{n+h}\) by
+\((2/5)\sin(h\theta)\). Expanding
+\(-\cos\bigl(\psi_n+h\theta\bigr)\) in \eqref{eq:res},
+the coefficient of \(\sin\psi_n\) is \(\sin(h\theta)>0\).
+The two other terms together have modulus less than
+\((4/5)\sin(h\theta)\), while
+\(|\sin\psi_n|>\sqrt{1-(2/5)^2}>4/5\). It follows that
+\begin{equation}\label{eq:sign}
+ \sgn S_{n+h}=\sgn\sin\psi_n\quad\text{at every old root in this domain}.
+\end{equation}
+
+\section{Cancellation near the merger}
+
+For \(0<\epsilon\le1/32\), scale \(z=\epsilon y\). Then
+\[
+ \frac{6G_q(\epsilon y)}{\epsilon^3}
+ =2-e^{\epsilon y}
+   +6\sum_{i\ge0}\frac{\epsilon^i y^{i+3}}{(i+3)!}
+ =1+y^3+\epsilon(y^4/4-y)+O(\epsilon^2).
+\]
+For \(w^3=-1\), put \(a=5/12\) and \(c_w=w-a\epsilon w^2\).
+The disk \(|y-c_w|<\epsilon^2\) contains one zero \(y_w\).
+Indeed, on its boundary compare the scaled function with
+\(3w^2(y-c_w)\). There \(|y-w|\le0.45\epsilon\) and
+\(|y|\le1.02\). The first-order constant terms cancel
+because \(w^4=-w\). The rest of the cubic part is at most
+\(3.02|y-w|^2\), and the variation of \(y^4/4-y\) is
+at most \((1+1.02^3)|y-w|\). The exponential series tails
+are bounded using \(e^{1.02/32}<1.04\). Dividing the resulting
+residual bound by \(\epsilon^2\) gives
+\[
+ 3.02(0.45)^2+(1+1.02^3)0.45+
+ 1.04(1.02^2/2+1.02^5/20)<3 .
+\]
+Rouch\'e applies and the disks are disjoint. Thus \(w=-1\)
+gives the real zero, and \(w=e^{\ii\pi/3}\) gives the upper zero.
+
+Write \(u=r/\epsilon\), \(v_0=v/\epsilon\) and
+\(\delta=\pi/3-\theta\). From
+\(|1-a\epsilon w|^2=1-a\epsilon+a^2\epsilon^2\) at the upper
+center, and the real center for \(w=-1\), we have
+\[
+ 1-a\epsilon/2-\epsilon^2\le u
+ \le1-a\epsilon/2+(1+a^2/2)\epsilon^2<1,\qquad
+ |v_0-(1+a\epsilon)|\le\epsilon^2 .
+\]
+The upper disk center is below the ray of angle \(\pi/3\)
+at perpendicular distance \(5\sqrt3\,\epsilon/24\).
+The perturbation of this distance is at most \(\epsilon^2\).
+Dividing by \(u\) and bounding the sine inverse gives
+\[
+ 0.32\epsilon<\sin\delta<0.41\epsilon,\quad
+ 0<\delta<0.42\epsilon,\quad \sin(3\theta)>0.95\epsilon.
+\]
+The disk modulus bounds and \eqref{eq:deriv} imply
+\[
+ 0.54\epsilon<1-\lambda<0.70\epsilon,\qquad
+ b\le\frac{1+2\epsilon/3}{2(1-2\epsilon/3)}<0.522 .
+\]
+In particular \(r<v\) and \(r<\epsilon\).
+Factoring \(G_q'(\zeta)=(\zeta^2/2)(1-4(1-q)/\zeta^2)\)
+shows that the second factor differs from one by at most
+\((2/3)\epsilon/u^2\). The disk bound on \(u\) gives
+\(|\beta-2\theta|<0.72\epsilon\) and hence
+\(|\beta-2\pi/3|<1.56\epsilon\).
+Also \(|G_q'(\zeta)|<\epsilon^2\) by \eqref{eq:deriv}.
+The scalar bounds just stated are checked by the accompanying
+rational script. By \eqref{eq:error}, for \(m\ge240\) the
+contour error is less than \(\epsilon/1000\).
+
+Use these estimates in the portion of the search interval where
+\begin{equation}\label{eq:n-epsilon}
+ n\epsilon\ge3/2.
+\end{equation}
+There \(\lambda^{n+1}<e^{-0.81}<0.45\), so
+\(|S_n+\cos\psi_n|<0.24\). At \(S_n=0\), subtract
+\((-\lambda)^h S_n\) from \(S_{n+h}\) in \eqref{eq:res}. This removes
+the real pole exactly and gives
+\begin{equation}\label{eq:cancel}
+ \begin{split}
+ S_{n+h}={}&\sin\psi_n\sin(h\theta)
+   +\bigl((-\lambda)^h-\cos(h\theta)\bigr)\cos\psi_n\\
+ &\hspace{4mm}+e_{n+h}-(-\lambda)^he_n .
+ \end{split}
+\end{equation}
+For \(h=1,2\), \(\sin(h\theta)>0.8\), and the bracket in
+\eqref{eq:cancel} has modulus at most \(2\).
+For \(h=3\), its modulus is at most
+\(3(1-\lambda)+(3\delta)^2/2\), using
+\(\cos(3\theta)=-\cos(3\delta)\). In all three cases the
+bracket divided by \(\sin(h\theta)\) has modulus at most \(5/2\).
+The two contour errors divided by that sine have sum of
+moduli less than \(2/950\).
+At an old root \(|\cos\psi_n|<0.24\), and
+\(\sqrt{1-0.24^2}>(5/2)\cdot0.24+2/950\).
+Therefore \eqref{eq:sign} also holds in the portion of the
+merging regime specified by \eqref{eq:n-epsilon}.
+
+\section{All roots and their order}
+
+Fix \(n\ge240\) and set \(d=\lfloor n/3\rfloor\). We locate old
+roots with
+\[
+ q_c<q\le q_*,
+ \qquad q_*=1-\frac{1}{6}\left(\frac{3}{2n}\right)^3.
+\]
+On this interval \(n\epsilon\ge3/2\). The phase \(\psi_n\) is
+continuous, since \(\zeta\) is simple and both arguments use the
+sectors established above. At the left limit \(\theta\to0\) and
+\(\beta\to\pi/2\). For the latter, as \(Y=\Imag\zeta\to0\),
+the real part of \(G_q'(\zeta)\) is \(O(Y^2)\) by the formula
+in Section~3 and its imaginary part is \(XY\) with \(X\to\alpha>0\).
+At \(q_*\), the corner estimates give
+\begin{align*}
+ \left|\psi_n-(n+3)\pi/3\right|
+ &<\bigl((n+1)0.42+1.56\bigr)\frac{3}{2n}\\
+ &\le 0.642375<\pi/4 .
+\end{align*}
+Since \((n+3)\pi/3\ge(d+1)\pi\), the phase must traverse each strip
+\[
+ [i\pi+\pi/4,(i+1)\pi-\pi/4],\qquad 1\le i\le d.
+\]
+The assertion needs only continuity. For each strip take the first
+hit of its upper endpoint after the preceding strip's upper hit,
+and the last hit of its lower endpoint before that. Between these
+two hits the phase lies within the strip, and the resulting
+parameter intervals are disjoint and ordered.
+
+On these intervals \(|S_n+\cos\psi_n|<2/5\) by \eqref{eq:middle}
+and the bound \(0.24\) in the merging regime. The values of
+\(-\cos\psi_n\) at the two boundary hits have opposite signs and
+absolute value \(\sqrt{2}/2\). Hence each strip contains the phase
+of a root at a parameter between its two hits. We have found
+\(d\) distinct roots of the degree-\(d\) polynomial \(P_n\).
+They are simple and account for all its roots. In particular,
+there are no remaining roots in the region \(n\epsilon<3/2\).
+
+At the \(i\)-th old root in increasing \(q\), the sign
+of \(\sin\psi_n\) is \((-1)^i\). By \eqref{eq:sign},
+this is the sign of the new row for each gap \(h=1,2,3\).
+The new row is positive at \(q=0\) since its constant coefficient
+is positive. Thus one new root lies before the first old root
+in increasing \(q\), and one lies in each old gap. If the new
+degree rises by one, its sign near \(q=1\) is \((-1)^{d+1}\),
+because its leading coefficient is positive and \(t\to-\infty\).
+This gives one more root after the last old root.
+The new degree exhausts the roots in either case and makes each
+simple. The map \(t=-q/(1-q)\) reverses the order, giving the two
+orders of Theorem~\ref{thm:main}.
+
+\section{The finite complement}
+
+For \(0\le n\le239\) and gaps one through three, the exact certificate
+uses the rows through 242. To verify it, reconstruct the coefficients
+by cutting at marked blocks. Write \(V(z)=(1-A(z))^{-1}\).
+A row with exactly \(k\) large blocks has a sequence of small
+blocks in each of the \(k+1\) gaps. Hence
+\[
+ [t^k]P_n(t)=n![z^n]B(z)^k V(z)^{k+1}.
+\]
+An integer binomial convolution in exponential normalization computes
+these coefficients. The generator proposes intervals by the
+last-block recurrence \eqref{eq:last} and Bernstein subdivision.
+The checker independently recomputes all rows by the marked-block
+formula and uses integer Horner evaluation after multiplying by a
+positive power of each endpoint denominator.
+
+There are 9,720 isolating brackets across the 243 rows, disjoint
+within each row and each with strict opposite endpoint signs.
+Each row has as many brackets as its degree. Thus continuity and
+degree give one simple negative root in every bracket and account
+for all the roots. Within each pair of rows the complete combined
+list of brackets has strict endpoint order, matching the two patterns
+of Theorem~\ref{thm:main}. The checker verifies 237 pairs of equal
+positive degree, 474 positive-degree pairs with a degree increase,
+three constant--constant pairs and six constant--linear pairs.
+This accounts for all 720 comparisons and completes the proof.
+
+\section*{Certificates and formal verification}
+
+The ancillary files contain the complete arithmetic certificates and
+Python standard-library verifiers. The closed-interval tests, the
+scalar corner checks and the finite-row comparisons were independently
+replayed. The all-size paper proof also received an independent
+mathematical review.
+The Lean 4.33.1 formalization includes the all-size theorem
+\path{OrderedPartitions.ThreePole.original_all}, its four-row form
+\path{original_four_rows}, and the sharpness theorem
+\path{five_rows_fail} in the same namespace. They refer to the original
+polynomial and to ordered root arrays that exhaust the roots with
+multiplicity. The formal proof connects the finite arithmetic
+certificates and the full analytic argument to these declarations.
+The accompanying Lean archive gives the pinned dependencies and
+instructions for rebuilding and replaying the proof.
+
+\paragraph{Disclosure.}
+ChatGPT assisted with the analytic arguments, independent review,
+certificate implementation, Lean work and manuscript preparation.
+
+\begin{thebibliography}{9}
+\bibitem{symcat}
+P.~Alexandersson, \emph{Real-rooted polynomials: open problems},
+the ordered set-partition conjecture, The Symmetric Functions Catalog.
+\href{https://www.symmetricfunctions.com/realRootedOpenProblems.htm\#set-partitions-and-trees}{Catalog}.
+
+\bibitem{realrooted}
+P.~Alexandersson, \emph{RealRooted}, issue 2590, with finite evidence
+and related block-weight questions.
+\href{https://github.com/PerAlexandersson/RealRooted/issues/2590}{GitHub}.
+
+\bibitem{mo}
+P.~Alexandersson, \emph{Set partitions with big blocks -- real-rooted
+polynomials?}, MathOverflow question 462360, 17 January 2024.
+\href{https://mathoverflow.net/questions/462360}{MathOverflow}.
+
+\bibitem{related}
+P.~Alexandersson, \emph{Real-rooted polynomials from set partitions},
+The Symmetric Functions Catalog.
+\href{https://www.symmetricfunctions.com/realRootedSetPartitions.htm}{Catalog}.
+
+\bibitem{fang}
+C.~Fang, \emph{Eventual interlacing of large-block set-partition
+polynomials}, Hexagon preprint 2611.01129v1, 26 November 2026.
+\href{https://hexagonmath.org/2611.01129v1}{Preprint}.
+\end{thebibliography}
+\end{document}
